@@ -65,7 +65,7 @@ function restrict(req, res, next) {
     if (req.session.user) {
         next();
     } else {
-        res.json({ access: false, message: 'Access denied!' });
+        res.json({ access: false, msg: 'Access denied!' });
     }
 }
 app.get('/restricted', restrict, (req, res) => {
@@ -74,7 +74,7 @@ app.get('/restricted', restrict, (req, res) => {
 
 app.get('/logout', function(req, res){
     req.session.destroy(function(){
-        res.send('Oh, 退出登录了。');
+        res.json({ status: true, msg: 'Oh, 退出登录了。' });
     });
 });
 
@@ -82,3 +82,6 @@ app.get('*', (req, res) => {
     res.sendFile(path.resolve('./public/index.html'));
 });
 export default app;
+
+// TODO 根据是否登录，控制menu的显示和隐藏
+// TODO 复用Form。

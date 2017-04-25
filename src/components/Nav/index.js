@@ -4,6 +4,7 @@ import Paper from 'material-ui/Paper';
 import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
 import { Link } from 'react-router';
+import { browserHistory } from 'react-router';
 const style = {
     container: {
         display: 'inline-block',
@@ -26,11 +27,16 @@ class Nav extends Component {
             method: 'GET',
             credentials: 'include',
         })
-            .then(response => response.blob())
-            .then((myBlob) => {
-                console.log(myBlob);
+            .then(response => response.json())
+            .then((data) => {
+                if(data.status){
+                    browserHistory.push({
+                        pathname: '/message',
+                        search: '',
+                        state: { msg: data.msg },
+                    });
+                }
             });
-        // redirect to
     }
     render() {
         const navElement = (

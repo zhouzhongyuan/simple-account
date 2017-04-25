@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Card } from 'material-ui/Card';
-import { browserHistory } from 'react-router';
 const style = {
     container: {
         flex: 1,
@@ -37,8 +36,7 @@ class Login extends Component {
     handlePasswordChange(e, v) {
         this.setState({ password: v });
     }
-    doLogin(e) {
-        console.log(this.state.name, this.state.password);
+    doLogin() {
         fetch('/login', {
             method: 'POST',
             credentials: 'include',
@@ -47,16 +45,9 @@ class Login extends Component {
             },
             body: `name=${this.state.name}&password=${this.state.password}`,
         })
-            .then(response => response.json())
-            .then((data) => {
-                if (data.status) {
-                    console.log('success')
-                    browserHistory.push({
-                        pathname: '/message',
-                        search: '',
-                        state: { msg: '登录成功' },
-                    });
-                }
+            .then(response => response.blob())
+            .then((myBlob) => {
+                console.log(myBlob);
             });
     }
     render() {
