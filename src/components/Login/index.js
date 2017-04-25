@@ -2,6 +2,23 @@ import React, { Component } from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Card } from 'material-ui/Card';
+const style = {
+    container: {
+        flex: 1,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    card: {
+        boxSizing: 'content-box',
+        maxWidth: 256,
+        flex: 1,
+        padding: 40,
+    },
+    input: {
+        marginBottom: 20,
+    },
+};
 class Login extends Component {
     constructor(props) {
         super(props);
@@ -37,28 +54,37 @@ class Login extends Component {
     }
     render() {
         return (
-            <Card>
-                <div>
-                    <TextField
-                        hintText="用户名"
-                        type="text"
-                        onChange={this.handleNameChange}
-                        value={this.state.name}
-                    /><br />
-                    <TextField
-                        hintText="密码"
-                        type="password"
-                        onChange={this.handlePasswordChange}
-                        value={this.state.password}
-                    />
-                    <br />
-                    <RaisedButton
-                        label="登录"
-                        primary
-                        onTouchTap={this.doLogin}
-                    />
-                </div>
-            </Card>
+            <div
+                style={style.container}
+            >
+                <Card
+                    style={style.card}
+                >
+                    <div>
+                        <TextField
+                            hintText="用户名"
+                            type="text"
+                            onChange={this.handleNameChange}
+                            value={this.state.name}
+                            style={style.input}
+                        /><br />
+                        <TextField
+                            hintText="密码"
+                            type="password"
+                            onChange={this.handlePasswordChange}
+                            value={this.state.password}
+                            style={style.input}
+                        />
+                        <br />
+                        <RaisedButton
+                            label="登录"
+                            primary
+                            onTouchTap={this.doLogin}
+                            fullWidth
+                        />
+                    </div>
+                </Card>
+            </div>
         );
     }
 }

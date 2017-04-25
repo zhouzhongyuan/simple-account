@@ -7,7 +7,7 @@ import { Link } from 'react-router';
 const style = {
     container: {
         display: 'inline-block',
-        margin: '16px 32px 16px 0',
+        margin: '16px 32px',
     },
     menu: {
         display: 'flex',
@@ -34,27 +34,42 @@ class Nav extends Component {
     }
     render() {
         const navElement = (
-            <div>
-                <Paper style={style.container}>
-                    <Menu listStyle={style.menu}>
-                        <Link to={'/register'} activeClassName="active"><MenuItem primaryText="注册" /></Link>
-                        <Link to={'/login'} activeClassName="active"><MenuItem primaryText="登录" /></Link>
-                        <MenuItem
-                            primaryText="退出"
-                            onTouchTap={this.logout}
-                        />
-                        <Link to={'/restricted'} activeClassName=""><MenuItem primaryText="我的" /></Link>
-                    </Menu>
-                </Paper>
-            </div>
+            <Paper style={style.container}>
+                <Menu listStyle={style.menu}>
+                    <Link to={'/register'} activeClassName="active"><MenuItem primaryText="注册" /></Link>
+                    <Link to={'/login'} activeClassName="active"><MenuItem primaryText="登录" /></Link>
+                    <MenuItem
+                        primaryText="退出"
+                        onTouchTap={this.logout}
+                    />
+                    <Link to={'/restricted'} activeClassName=""><MenuItem primaryText="我的" /></Link>
+                </Menu>
+            </Paper>
         );
         return (
-            <div>
+            <div
+                style={{
+                    height: '100%',
+                    display: 'flex',
+                    flexDirection: 'column',
+                }}
+            >
                 <AppBar
                     title="Account Demo"
+                    iconElementLeft={null}
+                    iconClassNameLeft={null}
                     iconElementRight={navElement}
+                    iconStyleRight={{ margin: 0 }}
                 />
-                {this.props.children}
+                <div
+                    style={{
+                        flex: 1,
+                        display: 'flex',
+                        flexDirection: 'column',
+                    }}
+                >
+                    {this.props.children}
+                </div>
             </div>
         );
     }
