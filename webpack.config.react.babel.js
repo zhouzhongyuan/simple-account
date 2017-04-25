@@ -12,6 +12,10 @@ const config = {
                 test: /\.js$/,
                 loader: 'babel-loader',
             },
+            {
+                test: /\.css$/,
+                loader: 'style-loader!css-loader',
+            },
         ],
     },
     watch: true,
