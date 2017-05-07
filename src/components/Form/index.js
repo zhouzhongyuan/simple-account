@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import { Card } from 'material-ui/Card';
@@ -20,6 +21,14 @@ const style = {
     },
 };
 class Login extends Component {
+    static defaultProps = {
+        submitText: '',
+        handleSubmit: function() {},
+    }
+    static propTypes = {
+        submitText: PropTypes.sting,
+        handleSubmit: PropTypes.func,
+    }
     constructor(props) {
         super(props);
         this.state = {
@@ -28,7 +37,7 @@ class Login extends Component {
         };
         this.handleNameChange = this.handleNameChange.bind(this);
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
-        this.doLogin = this.doLogin.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
     handleNameChange(e, v) {
         this.setState({ name: v });
@@ -36,19 +45,8 @@ class Login extends Component {
     handlePasswordChange(e, v) {
         this.setState({ password: v });
     }
-    doLogin() {
-        fetch('/login', {
-            method: 'POST',
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: `name=${this.state.name}&password=${this.state.password}`,
-        })
-            .then(response => response.blob())
-            .then((myBlob) => {
-                console.log(myBlob);
-            });
+    handleSubmit() {
+        this.props.handleSubmit(this.state);
     }
     render() {
         return (
@@ -75,9 +73,9 @@ class Login extends Component {
                         />
                         <br />
                         <RaisedButton
-                            label="登录"
+                            label={this.props.submitText}
                             primary
-                            onTouchTap={this.doLogin}
+                            onTouchTap={this.handleSubmit}
                             fullWidth
                         />
                     </div>

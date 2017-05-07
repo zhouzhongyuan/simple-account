@@ -6,7 +6,6 @@ const app = express();
 // 静态文件
 app.use('/dist', express.static('./dist/'));
 app.use('/public', express.static('./public/'));
-
 const users = {
     admin: { name: 'admin', password: 'admin' },
     zhongyuan: { name: 'zhongyuan', password: 'zhongyuan' },
@@ -29,8 +28,9 @@ app.use(session({
 app.post('/register', (req, res) => {
     const name = req.body.name;
     const password = req.body.password;
+    console.log(name, password);
     users[name] = { name, password };
-    res.send(`user ${name} saved.`);
+    res.json({ status: 'success', user: { name } });
 });
 function authenticate(name, pass, fn) {
     if (!module.parent) console.log('authenticating %s:%s', name, pass);
@@ -53,7 +53,7 @@ app.post('/login', (req, res) => {
                 // in the session store to be retrieved,
                 // or in this case the entire user object
                 req.session.user = user;
-                res.json({ status: 'success', user });
+                res.json({ status: 'success', user: { name: user.name } });
             });
         } else {
             console.log(err);
@@ -71,17 +71,14 @@ function restrict(req, res, next) {
 app.get('/restricted', restrict, (req, res) => {
     res.json({ access: true, message: 'Woh!' });
 });
-
-app.get('/logout', function(req, res){
-    req.session.destroy(function(){
+app.get('/logout', (req, res) => {
+    req.session.destroy(() => {
         res.json({ status: true, msg: 'Oh, 退出登录了。' });
     });
 });
-
 app.get('*', (req, res) => {
     res.sendFile(path.resolve('./public/index.html'));
 });
 export default app;
-
 // TODO 根据是否登录，控制menu的显示和隐藏
 // TODO 复用Form。
