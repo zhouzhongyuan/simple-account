@@ -29,7 +29,7 @@ class Nav extends Component {
         })
             .then(response => response.json())
             .then((data) => {
-                if(data.status){
+                if(data.success){
                     browserHistory.push({
                         pathname: '/message',
                         search: '',

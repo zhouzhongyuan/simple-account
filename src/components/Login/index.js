@@ -18,11 +18,23 @@ function iiHOC(WrappedComponent) {
             })
                 .then(response => response.json())
                 .then((data) => {
-                    if (data.status) {
+                    if (data.success) {
                         browserHistory.push({
                             pathname: '/message',
                             search: '',
-                            state: { msg: '登录成功' },
+                            state: {
+                                result: data.success,
+                                message: data.message,
+                            },
+                        });
+                    } else {
+                        browserHistory.push({
+                            pathname: '/message',
+                            search: '',
+                            state: {
+                                result: data.success,
+                                message: data.message,
+                            },
                         });
                     }
                 });

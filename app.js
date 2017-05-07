@@ -28,9 +28,8 @@ app.use(session({
 app.post('/register', (req, res) => {
     const name = req.body.name;
     const password = req.body.password;
-    console.log(name, password);
     users[name] = { name, password };
-    res.json({ status: 'success', user: { name } });
+    res.json({ success: true, user: { name } });
 });
 function authenticate(name, pass, fn) {
     if (!module.parent) console.log('authenticating %s:%s', name, pass);
@@ -45,19 +44,17 @@ function authenticate(name, pass, fn) {
 }
 app.post('/login', (req, res) => {
     authenticate(req.body.name, req.body.password, (err, user) => {
+        if(err){
+            res.json({ success: false, message: JSON.stringify(err, ['message', 'arguments', 'type', 'name']) });
+        }
         if (user) {
             // Regenerate session when signing in to prevent fixation
             // auth验证成功之后,重新生成新的session ID
             req.session.regenerate(() => {
-                // Store the user's primary key
-                // in the session store to be retrieved,
-                // or in this case the entire user object
+                // Store the user's primary key in the session store to be retrieved, or in this case the entire user object
                 req.session.user = user;
-                res.json({ status: 'success', user: { name: user.name } });
+                res.json({ success: true, message: JSON.stringify({ name: user.name }) });
             });
-        } else {
-            console.log(err);
-            res.send(err);
         }
     });
 });
@@ -65,15 +62,15 @@ function restrict(req, res, next) {
     if (req.session.user) {
         next();
     } else {
-        res.json({ access: false, msg: 'Access denied!' });
+        res.json({ success: false, msg: 'Access denied!' });
     }
 }
 app.get('/restricted', restrict, (req, res) => {
-    res.json({ access: true, message: 'Woh!' });
+    res.json({ success: true, message: 'Woh!' });
 });
 app.get('/logout', (req, res) => {
     req.session.destroy(() => {
-        res.json({ status: true, msg: 'Oh, 退出登录了。' });
+        res.json({ success: true, msg: 'Oh, 退出登录了。' });
     });
 });
 app.get('*', (req, res) => {
