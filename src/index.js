@@ -12,7 +12,7 @@ const App = () => (
             <Route path="/" component={Nav} >
                 <Route path="/login" component={Login} />
                 <Route path="/register" component={Register} />
-                <Route path="/restricted" component={Restricted} />
+                <Route path="/my" component={Restricted} />
                 <Route path="/message" component={Message} />
             </Route>
             <Route path="*" component={NotFound} />
