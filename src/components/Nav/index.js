@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import AppBar from 'material-ui/AppBar';
 import Paper from 'material-ui/Paper';
 import MenuItem from 'material-ui/MenuItem';
-import { Link } from 'react-router';
-import { browserHistory } from 'react-router';
+import { Link, browserHistory } from 'react-router';
 import IconButton from 'material-ui/IconButton';
 import ActionHome from 'material-ui/svg-icons/action/home';
 import './index.css';
@@ -14,15 +14,26 @@ const style = {
     },
 };
 class Nav extends Component {
-    constructor(props) {
-        super(props);
-        this.logout = this.logout.bind(this);
-        this.goHome = this.goHome.bind(this);
-    }
-    goHome() {
+    static propTypes = {
+        children: PropTypes.oneOfType([
+            PropTypes.arrayOf(PropTypes.node),
+            PropTypes.node,
+        ]),
+    };
+    static goHome = () => {
         browserHistory.push({
             pathname: '/',
         });
+    };
+    // goHome() {
+    //     browserHistory.push({
+    //         pathname: '/',
+    //     });
+    // }
+    constructor(props) {
+        super(props);
+        this.logout = this.logout.bind(this);
+        // this.goHome = this.goHome.bind(this);
     }
     logout() {
         // logout
@@ -84,7 +95,7 @@ class Nav extends Component {
                 <AppBar
                     title="Account Demo"
                     iconElementLeft={<IconButton><ActionHome /></IconButton>}
-                    onLeftIconButtonTouchTap={this.goHome}
+                    onLeftIconButtonTouchTap={Nav.goHome}
                     iconClassNameLeft={null}
                     iconElementRight={navElement}
                     iconStyleRight={{ margin: 0 }}

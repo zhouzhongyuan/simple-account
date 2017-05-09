@@ -35,7 +35,9 @@ app.post('/register', (req, res) => {
     res.json({ success: true, user: { name } });
 });
 function authenticate(name, pass, fn) {
-    if (!module.parent) console.log('authenticating %s:%s', name, pass);
+    if (!module.parent) {
+        console.log('authenticating %s:%s', name, pass);    // eslint-disable-line no-console
+    }
     const user = users[name];
     // query the db for the given username
     if (!user) return fn(new Error(`Can't find user ${name}.`));
@@ -43,19 +45,21 @@ function authenticate(name, pass, fn) {
     if (pass === user.password) {
         return fn(null, user);
     }
-    fn(new Error('invalid password'));
+    return fn(new Error('invalid password'));
 }
 app.post('/login', (req, res) => {
     authenticate(req.body.name, req.body.password, (err, user) => {
         if (err) {
-            res.json({ success: false, message: JSON.stringify(err, ['message', 'arguments', 'type', 'name']) });
+            res.json({
+                success: false,
+                message: JSON.stringify(err, ['message', 'arguments', 'type', 'name']),
+            });
         }
         if (user) {
             // Regenerate session when signing in to prevent fixation
             // auth验证成功之后,重新生成新的session ID
             req.session.regenerate(() => {
-                // Store the user's primary key in the session store to be retrieved, or in this case the entire user object
-                req.session.user = user;
+                req.session.user = user;    // eslint-disable-line no-param-reassign
                 res.json({ success: true, message: JSON.stringify({ name: user.name }) });
             });
         }

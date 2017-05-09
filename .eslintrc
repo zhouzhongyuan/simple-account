@@ -12,10 +12,6 @@
     "jsx-quotes": ["error", "prefer-double"],
     "no-console": ["error", { "allow": ["warn", "error"] }],
     "react/jsx-indent":"off",
-    "react/jsx-indent-props":"off",
-    "prefer-stateless-function":"off",
-    "jsx-filename-extension":"off",
-    "import/newline-after-import":"off",
-    "no-underscore-dangle": "off"
+    "react/jsx-indent-props":"off"
   }
 }

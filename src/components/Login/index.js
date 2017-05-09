@@ -1,5 +1,5 @@
 import { browserHistory } from 'react-router';
-import React, { Component } from 'react';
+import React from 'react';
 import Form from '../Form';
 function iiHOC(WrappedComponent) {
     return class PP extends WrappedComponent {
