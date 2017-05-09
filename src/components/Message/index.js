@@ -13,6 +13,6 @@ function Message(props) {
     );
 }
 Message.propTypes = {
-    location: PropTypes.obj,
+    location: PropTypes.object,
 };
 export default Message;

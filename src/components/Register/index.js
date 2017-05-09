@@ -18,7 +18,7 @@ function ppHOC(WrappedComponent) {
             })
                 .then(response => response.json())
                 .then((data) => {
-                    if (data.success) {
+                    if (data) {
                         browserHistory.push({
                             pathname: '/message',
                             search: '',

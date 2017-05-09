@@ -18,16 +18,7 @@ function iiHOC(WrappedComponent) {
             })
                 .then(response => response.json())
                 .then((data) => {
-                    if (data.success) {
-                        browserHistory.push({
-                            pathname: '/message',
-                            search: '',
-                            state: {
-                                result: data.success,
-                                message: data.message,
-                            },
-                        });
-                    } else {
+                    if (data) {
                         browserHistory.push({
                             pathname: '/message',
                             search: '',

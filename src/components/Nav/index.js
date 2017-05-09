@@ -25,25 +25,18 @@ class Nav extends Component {
             pathname: '/',
         });
     };
-    // goHome() {
-    //     browserHistory.push({
-    //         pathname: '/',
-    //     });
-    // }
     constructor(props) {
         super(props);
         this.logout = this.logout.bind(this);
-        // this.goHome = this.goHome.bind(this);
     }
     logout() {
-        // logout
         fetch('/logout', {
             method: 'GET',
             credentials: 'include',
         })
             .then(response => response.json())
             .then((data) => {
-                if (data.success) {
+                if (data) {
                     browserHistory.push({
                         pathname: '/message',
                         search: '',
