@@ -20,13 +20,13 @@ const style = {
         marginBottom: 20,
     },
 };
-class Login extends Component {
+class Form extends Component {
     static defaultProps = {
         submitText: '',
-        handleSubmit: function() {},
+        handleSubmit: null,
     }
     static propTypes = {
-        submitText: PropTypes.sting,
+        submitText: PropTypes.string,
         handleSubmit: PropTypes.func,
     }
     constructor(props) {
@@ -84,4 +84,4 @@ class Login extends Component {
         );
     }
 }
-export default Login;
+export default Form;

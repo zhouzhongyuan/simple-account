@@ -12,8 +12,8 @@ class Restricted extends Component {
             credentials: 'include',
         })
             .then(res => res.json())
-            .then((res) => {
-                this.setState({ isLogin: res.access });
+            .then((data) => {
+                this.setState({ isLogin: data.success });
             })
             .catch((err) => {
                 this.setState({ isLogin: false });
@@ -22,7 +22,7 @@ class Restricted extends Component {
     render() {
         return (
             <h1>
-                登录了吗？{this.state.isLogin ? '是' : '否'}
+                {this.state.isLogin ? '恭喜你，登录成功！' : '未登录！'}
             </h1>
         );
     }

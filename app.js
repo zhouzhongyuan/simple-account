@@ -28,6 +28,9 @@ app.use(session({
 app.post('/register', (req, res) => {
     const name = req.body.name;
     const password = req.body.password;
+    if (Object.prototype.hasOwnProperty.call(users, name)) {
+        res.json({ success: false, message: `Username "${name}" already exist.` });
+    }
     users[name] = { name, password };
     res.json({ success: true, user: { name } });
 });
@@ -44,7 +47,7 @@ function authenticate(name, pass, fn) {
 }
 app.post('/login', (req, res) => {
     authenticate(req.body.name, req.body.password, (err, user) => {
-        if(err){
+        if (err) {
             res.json({ success: false, message: JSON.stringify(err, ['message', 'arguments', 'type', 'name']) });
         }
         if (user) {
@@ -70,12 +73,10 @@ app.get('/restricted', restrict, (req, res) => {
 });
 app.get('/logout', (req, res) => {
     req.session.destroy(() => {
-        res.json({ success: true, msg: 'Oh, 退出登录了。' });
+        res.json({ success: true, message: 'Oh, 退出登录了。' });
     });
 });
 app.get('*', (req, res) => {
     res.sendFile(path.resolve('./public/index.html'));
 });
 export default app;
-// TODO 根据是否登录，控制menu的显示和隐藏
-// TODO 复用Form。

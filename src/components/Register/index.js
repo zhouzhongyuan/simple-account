@@ -18,11 +18,14 @@ function ppHOC(WrappedComponent) {
             })
                 .then(response => response.json())
                 .then((data) => {
-                    if (data.status) {
+                    if (data.success) {
                         browserHistory.push({
                             pathname: '/message',
                             search: '',
-                            state: { msg: '注册成功' },
+                            state: {
+                                result: data.success,
+                                message: data.message,
+                            },
                         });
                     }
                 });
