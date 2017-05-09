@@ -1,5 +1,5 @@
 import React from 'react';
-function NotFound() {
+function Home() {
     return (
         <div>
             <h1>
@@ -11,4 +11,4 @@ function NotFound() {
         </div>
     );
 }
-export default NotFound;
+export default Home;
