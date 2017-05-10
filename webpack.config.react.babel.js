@@ -5,7 +5,6 @@ import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 const config = {
     entry: {
         app: path.resolve(__dirname, 'src/index.js'),
-        vendor: ['react', 'react-dom', 'material-ui', 'react-router'],
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -38,6 +37,11 @@ if (process.env.NODE_ENV === 'production') {
         new BundleAnalyzerPlugin(),
         new webpack.optimize.CommonsChunkPlugin({
             name: 'vendor',
+            minChunks: ({ resource }) => (
+                resource &&
+                resource.indexOf('node_modules') >= 0 &&
+                resource.match(/\.js$/)
+            ),
         }),
     ]);
 }
