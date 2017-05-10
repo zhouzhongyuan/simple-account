@@ -81,6 +81,6 @@ app.get('/logout', (req, res) => {
     });
 });
 app.get('*', (req, res) => {
-    res.sendFile(path.resolve('./public/index.html'));
+    res.sendFile(path.resolve('./dist/index.html'));
 });
 export default app;
