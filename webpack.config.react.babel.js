@@ -1,7 +1,6 @@
 import webpack from 'webpack';
 import path from 'path';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 const config = {
     entry: {
         app: path.resolve(__dirname, 'src/index.js'),

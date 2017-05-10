@@ -2,7 +2,9 @@ import express from 'express';
 import path from 'path';
 import bodyParser from 'body-parser';
 import session from 'express-session';
+import compression from 'compression';
 const app = express();
+app.use(compression());
 // 静态文件
 app.use('/dist', express.static('./dist/'));
 app.use('/public', express.static('./public/'));
