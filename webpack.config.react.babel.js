@@ -17,6 +17,7 @@ const config = {
             {
                 test: /\.js$/,
                 loader: 'babel-loader',
+                query: { compact: false },
             },
             {
                 test: /\.css$/,
@@ -30,11 +31,12 @@ const config = {
             template: './public/index.html',
         }),
     ],
+    watch: true,
 };
 if (process.env.NODE_ENV === 'production') {
-    config.devtool = '#source-map';
-    config.plugins = (config.plugins || []).concat([
-        new BundleAnalyzerPlugin(),
+        config.devtool = '#source-map';
+        config.watch = false;
+        config.plugins = (config.plugins || []).concat([
         new webpack.optimize.CommonsChunkPlugin({
             name: 'vendor',
             minChunks: ({ resource }) => (
@@ -42,6 +44,11 @@ if (process.env.NODE_ENV === 'production') {
                 resource.indexOf('node_modules') >= 0 &&
                 resource.match(/\.js$/)
             ),
+        }),
+        new webpack.DefinePlugin({
+            'process.env': {
+                NODE_ENV: '"production"',
+            },
         }),
         new webpack.optimize.UglifyJsPlugin({
             sourceMap: true,
