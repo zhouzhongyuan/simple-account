@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "bundle-react": "webpack --config webpack.config.react.babel.js",
-    "bundle-server": "webpack --config webpack.config.server.babel.js",
-    "start": "nodemon dist/server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "cross-env NODE_ENV=development webpack --config webpack.config.react.babel.js",
+    "build": "cross-env NODE_ENV=production webpack --config webpack.config.react.babel.js",
+    "server": "webpack --config webpack.config.server.babel.js",
+    "start": "node dist/server.js"
   },
   "author": "",
   "license": "MIT",
@@ -22,6 +22,7 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "babel-register": "^6.24.1",
+    "cross-env": "^4.0.0",
     "css-loader": "^0.28.0",
     "eslint": "^2.13.1",
     "eslint-config-airbnb": "^9.0.1",
