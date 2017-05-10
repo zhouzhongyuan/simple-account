@@ -43,6 +43,15 @@ if (process.env.NODE_ENV === 'production') {
                 resource.match(/\.js$/)
             ),
         }),
+        new webpack.optimize.UglifyJsPlugin({
+            sourceMap: true,
+            compress: {
+                warnings: false,
+            },
+        }),
+        new webpack.LoaderOptionsPlugin({
+            minimize: true,
+        }),
     ]);
 }
 module.exports = config;
